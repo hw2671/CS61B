@@ -1,11 +1,10 @@
 public class NBody {
-    static double radius = 0.0;
-    static Body[] bodies;
+    private static double radius = 0.0;
+    private static Body[] bodies;
     public static void main(String args[]) {
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         String filename = args[2];
-        System.out.println(args[0] + " " + args[1] + " " + args[2]);
 
         radius = readRadius(filename);
         bodies = readBodies(filename);
@@ -45,6 +44,14 @@ public class NBody {
             StdDraw.pause(10);
             timeNow += dt;
         }
+
+        StdOut.printf("%d\n", bodies.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < bodies.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+            bodies[i].xxPos, bodies[i].yyPos, bodies[i].xxVel,
+            bodies[i].yyVel, bodies[i].mass, bodies[i].imgFileName);   
+        }
     }
 
     public static double readRadius(String filename) {
@@ -78,13 +85,6 @@ public class NBody {
                 in.readDouble(),
                 in.readString()
             );
-        }
-
-        if(!(bodies.length <= 1)) {
-            for (int k = 0; k < bodies.length; k++) {
-                System.out.print(bodies[k].xxPos + " " + bodies[k].yyPos + " " + bodies[k].xxVel + " " + bodies[k].yyVel + " " + bodies[k].mass + " " + bodies[k].imgFileName);
-                System.out.println("--*--");
-            }
         }
 
         return bodies;

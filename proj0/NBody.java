@@ -15,7 +15,6 @@ public class NBody {
 
         // Draw bodies
         for (int i = 0; i < bodies.length; i++){
-            System.out.println(bodies[i].imgFileName);
             bodies[i].draw();
         }
 
@@ -37,7 +36,6 @@ public class NBody {
 
             StdDraw.picture(0,0, "./images/starfield.jpg");
             for (int l = 0; l < bodies.length; l++){
-                System.out.println(bodies[l].imgFileName);
                 bodies[l].draw();
             }
             StdDraw.show();

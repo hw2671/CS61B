@@ -3,33 +3,33 @@ Invariants (notes):
 - ArrayDeque is full is frontIndex == backIndex
 - ArrayDeque is empty is frontIndex == (size / 2) and backIndex == (size / 2 + 1)
  */
-public class ArrayDeque<Item> {
+public class ArrayDeque<T> {
     private int size = 0, frontIndex = 0, backIndex = 0;
-    private Item[] array;
+    private T[] array;
     private final int SCALE_FACTOR = 2, INITIAL_SIZE = 8;
 
     public ArrayDeque() {
-        array = (Item[]) new Object[INITIAL_SIZE];
+        array = (T[]) new Object[INITIAL_SIZE];
     }
 
     public ArrayDeque(ArrayDeque other) {
-        Item[] newArray = (Item[]) new Object[other.array.length];
-        for (int i = 0; i < other.getSize(); i++) {
-            newArray[i] = (Item) other.get(i);
+        T[] newArray = (T[]) new Object[other.array.length];
+        for (int i = 0; i < other.size(); i++) {
+            newArray[i] = (T) other.get(i);
             backIndex = i + 1;
         }
 
         frontIndex = newArray.length - 1;
         array = newArray;
-        size = other.getSize();
+        size = other.size();
     }
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 
     private int addOne(int num) {
-       return (num + 1) % array.length;
+        return (num + 1) % array.length;
     }
 
     private int minusOne(int num) {
@@ -50,9 +50,9 @@ public class ArrayDeque<Item> {
         return false;
     }
 
-    public void addLast(Item i) {
+    public void addLast(T i) {
         if (!this.isFull()) {
-            if(backIndex == 0 && array[backIndex] != null){
+            if (backIndex == 0 && array[backIndex] != null) {
                 backIndex = addOne(backIndex);
             }
             array[backIndex] = i;
@@ -68,9 +68,9 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public void addFirst(Item i) {
+    public void addFirst(T i) {
         if (!this.isFull()) {
-            if(frontIndex == 0 && array[frontIndex] != null){
+            if (frontIndex == 0 && array[frontIndex] != null) {
                 frontIndex = minusOne(frontIndex);
             }
             array[frontIndex] = i;
@@ -86,23 +86,23 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public Item remove(int index) {
-        Item i = array[index];
+    public T remove(int index) {
+        T i = array[index];
         array[index] = null;
         return i;
     }
 
-    public Item removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
-        } else if(isFull()) {
+        } else if (isFull()) {
             size--;
             return remove(frontIndex);
         } else {
             frontIndex = addOne(frontIndex);
             size--;
 
-            if(usageRatioExceeded()) {
+            if (usageRatioExceeded()) {
                 decreaseSize();
             }
 
@@ -110,20 +110,20 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public Item removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         } else if (isFull()) {
             return remove(backIndex);
         } else {
-            if(backIndex == 0) {
+            if (backIndex == 0) {
                 size--;
                 return remove(backIndex);
             }
             backIndex = minusOne(backIndex);
             size--;
 
-            if(usageRatioExceeded()) {
+            if (usageRatioExceeded()) {
                 decreaseSize();
             }
 
@@ -131,7 +131,7 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public Item get(int index) {
+    public T get(int index) {
         if (index > size || index < 0) {
             return null;
         }
@@ -145,7 +145,7 @@ public class ArrayDeque<Item> {
     }
 
     public void increaseSize() {
-        Item[] newArray = (Item[]) new Object[array.length * SCALE_FACTOR];
+        T[] newArray = (T[]) new Object[array.length * SCALE_FACTOR];
         for (int i = 0; i < size; i++) {
             newArray[i] = get(i);
         }
@@ -156,7 +156,7 @@ public class ArrayDeque<Item> {
     }
 
     public void decreaseSize() {
-        Item[] newArray = (Item[]) new Object[array.length / 2];
+        T[] newArray = (T[]) new Object[array.length / 2];
         for (int i = 0; i < size; i++) {
             newArray[i] = get(i);
         }

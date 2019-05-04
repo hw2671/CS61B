@@ -2,7 +2,7 @@ public class ArrayDequeTest {
     public static void main(String args[]) {
         ArrayDeque<String> test = new ArrayDeque<>();
         System.out.println("Should be true for empty list: " + test.isEmpty());
-        System.out.println(test.getSize());
+        System.out.println(test.size());
 
 //        test.addLast("hello");
 //        test.addFirst("world");
@@ -53,6 +53,6 @@ public class ArrayDequeTest {
         System.out.println("Testing get: " + test.get(0));
         System.out.println("Testing get: " + test.get(3));
 
-        System.out.println(test.getSize());
+        System.out.println(test.size());
     }
 }

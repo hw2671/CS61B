@@ -1,14 +1,14 @@
-public class LinkedListDeque<Item> {
+public class LinkedListDeque<T> {
 
     // class for the actual nodes
-    public class ListNode<Item> {
+    public class ListNode<T> {
         private ListNode prev;
-        private Item item;
+        private T T;
         private ListNode next;
 
-        public ListNode(ListNode p, Item i, ListNode n) {
+        public ListNode(ListNode p, T i, ListNode n) {
             prev = p;
-            item = i;
+            T = i;
             next = n;
         }
     }
@@ -27,11 +27,11 @@ public class LinkedListDeque<Item> {
         int sizeOfOtherLinkedList = other.size();
 
         for (int i = 0; i < sizeOfOtherLinkedList; i++) {
-            this.addLast( (Item) other.get(i) );
+            this.addLast((T) other.get(i));
         }
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
@@ -39,18 +39,18 @@ public class LinkedListDeque<Item> {
         return size;
     }
 
-    public void addFirst(Item i) {
+    public void addFirst(T i) {
         size += 1;
 
-        if(middleMan.next == null) {
+        if (middleMan.next == null) {
             middleMan.next = new ListNode(middleMan, i, middleMan);
         } else {
             middleMan.next = new ListNode(middleMan, i, middleMan.next);
         }
     }
 
-    public void addLast(Item i) {
-        if(middleMan.prev == null) {
+    public void addLast(T i) {
+        if (middleMan.prev == null) {
             addFirst(i);
         } else {
             size += 1;
@@ -66,65 +66,69 @@ public class LinkedListDeque<Item> {
         } else {
             ListNode ptr = middleMan.next;
             while (ptr != middleMan) {
-                output += ptr.item + " ";
+                output += ptr.T + " ";
                 ptr = ptr.next;
             }
             System.out.println(output);
         }
     }
 
-    public Item removeFirst() {
+    public T removeFirst() {
         if (this.isEmpty()) {
             return null;
         } else if (size == 1) {
-            Item i = (Item) middleMan.next.item;
+            T i = (T) middleMan.next.T;
             middleMan.next = null;
             size -= 1;
             return i;
         }
 
-        // remove prev and next references from 'first item'
+        // remove prev and next references from 'first T'
         ListNode first = middleMan.next;
         middleMan.next = first.next;
         first.next.prev = middleMan;
 
         // clear out first to prevent loitering
-        Item i = (Item) first.item;
+        T i = (T) first.T;
         first = null;
         size -= 1;
         return i;
 
     }
 
-    public Item removeLast() {
-        if (this.isEmpty()) return null;
+    public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
 
         if (size == 1) {
-            Item i = (Item) middleMan.next.item;
+            T i = (T) middleMan.next.T;
             middleMan.next = null;
             size -= 1;
             return i;
         }
 
-        // remove prev and next references from 'last item'
+        // remove prev and next references from 'last T'
         ListNode last = middleMan.prev;
         middleMan.prev = last.prev;
         last.prev = middleMan;
 
-        // clear out last item to prevent loitering
-        Item i = (Item) last.item;
+        // clear out last T to prevent loitering
+        T i = (T) last.T;
         last = null;
         size -= 1;
         return i;
     }
 
     // get ith element in list (must be iterative)
-    public Item get(int index) {
+    public T get(int index) {
         int i = 0;
         ListNode ptr = middleMan.next;
 
-        while(i <= index) {
-            if (i == index) return (Item) ptr.item;
+        while (i <= index) {
+            if (i == index) {
+                return (T) ptr.T;
+            }
             ptr = ptr.next;
             i++;
         }
@@ -133,16 +137,18 @@ public class LinkedListDeque<Item> {
     }
 
     // recursive get
-    public Item getRecursive(int index) {
-        if (index > size) return null;
-        return (Item) getRecursiveNode(index, middleMan.next);
+    public T getRecursive(int index) {
+        if (index > size) {
+            return null;
+        }
+        return (T) getRecursiveNode(index, middleMan.next);
     }
 
-    private Item getRecursiveNode (int index, ListNode node) {
+    private T getRecursiveNode(int index, ListNode node) {
         if (index == 0) {
-            return (Item) node.item;
+            return (T) node.T;
         }
 
-        return (Item) getRecursiveNode(index - 1, node.next);
+        return (T) getRecursiveNode(index - 1, node.next);
     }
 }

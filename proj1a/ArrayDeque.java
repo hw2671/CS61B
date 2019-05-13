@@ -86,7 +86,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    public T remove(int index) {
+    private T remove(int index) {
         T i = array[index];
         array[index] = null;
         return i;
@@ -144,7 +144,7 @@ public class ArrayDeque<T> {
 
     }
 
-    public void increaseSize() {
+    private void increaseSize() {
         T[] newArray = (T[]) new Object[array.length * SCALE_FACTOR];
         for (int i = 0; i < size; i++) {
             newArray[i] = get(i);
@@ -155,7 +155,7 @@ public class ArrayDeque<T> {
         array = newArray;
     }
 
-    public void decreaseSize() {
+    private void decreaseSize() {
         T[] newArray = (T[]) new Object[array.length / 2];
         for (int i = 0; i < size; i++) {
             newArray[i] = get(i);
@@ -166,12 +166,11 @@ public class ArrayDeque<T> {
         array = newArray;
     }
 
-    public boolean usageRatioExceeded() {
+    private boolean usageRatioExceeded() {
         double sizeDouble = (double) this.size;
         double arrLenDouble = (double) this.array.length;
 
         double R = sizeDouble / arrLenDouble;
-        System.out.println(R);
         if (array.length > 16 && R < 0.25) {
             return true;
         }

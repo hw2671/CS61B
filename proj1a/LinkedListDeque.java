@@ -12,8 +12,6 @@ public class LinkedListDeque<T> {
             next = n;
         }
     }
-
-
     private int size = 0;
     // sentinel node.
     private ListNode middleMan = new ListNode(null, null, null);

@@ -1,10 +1,10 @@
 public class Palindrome {
     public Deque<Character> wordToDeque(String word) {
-        if(word.length() == 0) {
+        if (word.length() == 0) {
             return null;
         }
         LinkedListDeque<Character> res = new LinkedListDeque<>();
-        for (int i = 0; i < word.length() ; i++) {
+        for (int i = 0; i < word.length(); i++) {
             res.addLast(word.charAt(i));
         }
         return res;
@@ -21,6 +21,7 @@ public class Palindrome {
     }*/
 
     public boolean isPalindrome(String word) {
+        word = word.toLowerCase();
         if (word.length() == 0 || word.length() == 1) {
             return true;
         }
@@ -28,11 +29,12 @@ public class Palindrome {
         Character front = wordDequed.removeFirst();
         Character back = wordDequed.removeLast();
         if (front == back) {
-            return isPalindrome(DequeToWord(wordDequed));
+            return isPalindrome(dequeToWord(wordDequed));
         }
         return false;
     }
     public boolean isPalindrome(String word, CharacterComparator cc) {
+        word = word.toLowerCase();
         if (word.length() == 0 || word.length() == 1) {
             return true;
         }
@@ -40,10 +42,11 @@ public class Palindrome {
         Character front = wordDequed.removeFirst();
         Character back = wordDequed.removeLast();
         if (cc.equalChars(front, back)) {
-            return isPalindrome(DequeToWord(wordDequed), cc);
+            return isPalindrome(dequeToWord(wordDequed), cc);
         }
         return false;
     }
+
 //    public boolean isPalindrome(Deque<Character> word) {
 //        if (word.size() == 1 || word.size() == 0) {
 //            return true;
@@ -56,7 +59,7 @@ public class Palindrome {
 //        return false;
 //    }
 
-    public String DequeToWord(Deque<Character> word) {
+    private String dequeToWord(Deque<Character> word) {
         StringBuilder res = new StringBuilder();
         while (word.size() != 0) {
             res.append(word.removeFirst());

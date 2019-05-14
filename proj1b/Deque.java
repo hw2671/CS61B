@@ -1,20 +1,20 @@
 public interface Deque<T> {
-    int size = 0;
-    public void addFirst(T item);
+    int SIZE = 0;
+    void addFirst(T item);
 
-    public void addLast(T item);
+    void addLast(T item);
 
-    public int size();
+    int size();
 
-    public default boolean isEmpty() {
-        return size == 0;
+    default boolean isEmpty() {
+        return SIZE == 0;
     }
 
-    public void printDeque();
+    void printDeque();
 
-    public T removeFirst();
+    T removeFirst();
 
-    public T removeLast();
+    T removeLast();
 
-    public T get(int i);
+    T get(int i);
 }

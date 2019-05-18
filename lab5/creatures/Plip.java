@@ -1,9 +1,10 @@
 package creatures;
 
+import huglife.Occupant;
 import huglife.Creature;
+import huglife.Empty;
 import huglife.Direction;
 import huglife.Action;
-import huglife.Occupant;
 
 import java.awt.Color;
 import java.util.ArrayDeque;
@@ -35,9 +36,9 @@ public class Plip extends Creature {
      */
     public Plip(double e) {
         super("plip");
-        r = 0;
+        r = 99;
         g = 0;
-        b = 0;
+        b = 76;
         energy = e;
     }
 
@@ -57,7 +58,7 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        g = (96 * ((int) this.energy) + 63);
         return color(r, g, b);
     }
 
@@ -74,7 +75,8 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        this.energy -= 0.15;
+        checkEnergy();
     }
 
 
@@ -82,7 +84,20 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        this.energy += 0.2;
+        checkEnergy();
+    }
+
+    /*
+     * Checks to see if Plip's energy is above 2 or less than 0 and adjust accordingly
+     * to never be greater than or less than either, respectively.
+     */
+    private void checkEnergy() {
+        if (this.energy < 0.0) {
+            this.energy = 0.0;
+        } else if (this.energy > 2.0) {
+            this.energy = 2.0;
+        }
     }
 
     /**
@@ -91,7 +106,9 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        Plip dup = new Plip(this.energy / 2.0);
+        this.energy = this.energy / 2.0;
+        return dup;
     }
 
     /**
@@ -111,20 +128,50 @@ public class Plip extends Creature {
         // Rule 1
         Deque<Direction> emptyNeighbors = new ArrayDeque<>();
         boolean anyClorus = false;
-        // TODO
-        // (Google: Enhanced for-loop over keys of NEIGHBORS?)
-        // for () {...}
 
-        if (false) { // FIXME
-            // TODO
+        for (Map.Entry<Direction, Occupant> item : neighbors.entrySet()) {
+            if (item.getValue() instanceof Empty) {
+                emptyNeighbors.add(item.getKey());
+            }
+        }
+
+        if (emptyNeighbors.isEmpty()) {
+            return new Action(Action.ActionType.STAY);
         }
 
         // Rule 2
-        // HINT: randomEntry(emptyNeighbors)
+        if (!emptyNeighbors.isEmpty() && this.energy >= 1.0) {
+            return new Action(Action.ActionType.REPLICATE, randomEntry(emptyNeighbors));
+        }
 
         // Rule 3
-
+        for (Occupant occupant : neighbors.values()) {
+            if (occupant.name().equals("clorus")) {
+                if (((int) (Math.random() * 2) == 1)) {
+                    return new Action(Action.ActionType.MOVE, randomEntry(emptyNeighbors));
+                }
+            }
+        }
         // Rule 4
         return new Action(Action.ActionType.STAY);
+    }
+
+    private Direction randomEntry(Deque<Direction> emptyNeigh) {
+        int random = (int) (Math.random() * emptyNeigh.size()) + 1;
+        if (random == 1) {
+            return emptyNeigh.removeFirst();
+        } else if (random == 2) {
+            emptyNeigh.removeFirst();
+            return emptyNeigh.removeFirst();
+        } else if (random == 3) {
+            emptyNeigh.removeFirst();
+            emptyNeigh.removeFirst();
+            return emptyNeigh.removeFirst();
+        } else {
+            emptyNeigh.removeFirst();
+            emptyNeigh.removeFirst();
+            emptyNeigh.removeFirst();
+            return emptyNeigh.removeFirst();
+        }
     }
 }

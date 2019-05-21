@@ -1,35 +1,46 @@
 public class UnionFind {
-
-    // TODO - Add instance variables?
+    private int[] array;
 
     /* Creates a UnionFind data structure holding n vertices. Initially, all
        vertices are in disjoint sets. */
     public UnionFind(int n) {
-        // TODO
+        array = new int[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = -1;
+        }
     }
 
     /* Throws an exception if v1 is not a valid index. */
     private void validate(int vertex) {
-        // TODO
+        if (v1 > array.length || v1 < 0) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     /* Returns the size of the set v1 belongs to. */
     public int sizeOf(int v1) {
-        // TODO
-        return -1;
+        int size = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == array[v1]) {
+                size++;
+            }
+        }
+        return size;
     }
 
     /* Returns the parent of v1. If v1 is the root of a tree, returns the
        negative size of the tree for which v1 is the root. */
     public int parent(int v1) {
-        // TODO
-        return -1;
+        if (array[v1] == -1) {
+            return -sizeOf(v1);
+        }
+        return array[v1];
     }
 
     /* Returns true if nodes v1 and v2 are connected. */
     public boolean connected(int v1, int v2) {
-        // TODO
-        return false;
+        if (parent(v1) == )
+        return array[v1] == array[v2];
     }
 
     /* Connects two elements v1 and v2 together. v1 and v2 can be any valid 
@@ -38,7 +49,7 @@ public class UnionFind {
        vertex with itself or vertices that are already connected should not 
        change the sets but may alter the internal structure of the data. */
     public void union(int v1, int v2) {
-        // TODO
+
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed

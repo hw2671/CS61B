@@ -12,7 +12,7 @@ public class UnionFind {
 
     /* Throws an exception if v1 is not a valid index. */
     private void validate(int vertex) {
-        if (v1 > array.length || v1 < 0) {
+        if (vertex > array.length || vertex < 0) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -39,7 +39,9 @@ public class UnionFind {
 
     /* Returns true if nodes v1 and v2 are connected. */
     public boolean connected(int v1, int v2) {
-        if (parent(v1) == )
+//        if (parent(v1) == parent(v2)) {
+//
+//        }
         return array[v1] == array[v2];
     }
 
